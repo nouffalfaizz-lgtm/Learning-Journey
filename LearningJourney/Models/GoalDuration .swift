@@ -33,7 +33,4 @@ enum GoalDuration: String , CaseIterable , Codable{
             return 96
         }
     }
-    
-    
-    
 }

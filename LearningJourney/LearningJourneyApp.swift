@@ -9,9 +9,22 @@ import SwiftUI
 
 @main
 struct LearningJourneyApp: App {
+    @State private var LViewModel = LearningViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            OnBoarding().preferredColorScheme(.dark)
+            
+            // if there's a goal --> go to Activtiy page
+            Group{
+                if let goal = LViewModel.goal{
+                    Text(goal.goalName)
+                }else{
+                    // if there's no goal(or first time user) go to On Borading page
+                    OnBoarding()
+                }
+            }
+            .environment(LViewModel)
+            .preferredColorScheme(.dark)
         }
     }
 }
