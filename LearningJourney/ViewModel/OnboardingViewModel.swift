@@ -18,9 +18,9 @@ class OnboardingViewModel {
         !GoalText.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func startLearning (){
+    func startLearning () -> LearningGoal{
         let goal = LearningGoal(goalName: GoalText, Duration: selectedDuration, StartDtae: .now)
-        print(goal)
+       return goal
     }
 }
 

@@ -11,7 +11,7 @@ struct OnBoarding: View {
     
     //connecting the view with View model
 @State private var viewModel = OnboardingViewModel()
-    
+    @Environment(LearningViewModel.self)private var learningViewModel
     var body: some View {
         VStack(alignment:.leading){
             //flame
@@ -58,8 +58,10 @@ struct OnBoarding: View {
                 }
             }
           Spacer()
+            
             Button {
-                viewModel.startLearning()
+                let newGoal = viewModel.startLearning()
+                learningViewModel.SetGoal(newGoal)
                 
             }label: {
                 Text("Strat Learning")
@@ -80,7 +82,9 @@ struct OnBoarding: View {
 }
 
 #Preview {
-    OnBoarding().preferredColorScheme(.dark)
+    OnBoarding()
+        .environment(LearningViewModel())
+        .preferredColorScheme(.dark)
 }
 
 
