@@ -33,4 +33,15 @@ enum GoalDuration: String , CaseIterable , Codable{
             return 96
         }
     }
+    
+    var totalDays: Int {
+        switch self {
+        case .week:
+            return 7
+        case .month:
+            return 30
+        case .year:
+            return 365
+        }
+    }
 }

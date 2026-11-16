@@ -14,6 +14,11 @@ class OnboardingViewModel {
     var GoalText : String = ""
     var selectedDuration : GoalDuration = .week
     
+    init(goal: LearningGoal? = nil) {
+        GoalText = goal?.goalName ?? ""
+        selectedDuration = goal?.Duration ?? .week
+    }
+    
     var canLearn : Bool {
         !GoalText.trimmingCharacters(in: .whitespaces).isEmpty
     }
