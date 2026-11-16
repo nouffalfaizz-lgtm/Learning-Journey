@@ -12,6 +12,9 @@ struct ActivityScreen: View {
     let goal: LearningGoal
     @Environment(LearningViewModel.self) private var learningVM
     var body: some View {
+        
+        TimelineView(.everyMinute) { _ in
+        
         VStack(alignment:.leading , spacing: 24){
             //the header
             HStack{
@@ -29,9 +32,9 @@ struct ActivityScreen: View {
                 
                 HStack{
                     //calender page button
-                    Button{
-                       
-                    }label: {
+                    NavigationLink {
+                        CalendarScreen()
+                    } label: {
                         Image(systemName: "calendar")
                             .foregroundStyle(.white)
                             .frame(width: 45, height: 45)
@@ -40,7 +43,8 @@ struct ActivityScreen: View {
                     }
                     
                     //notes page button
-                    Button{
+                    NavigationLink {
+                        EditGoalScreen(goal: goal)
                     } label: {
                         Image(systemName: "pencil.and.outline")
                             .foregroundStyle(.white)
@@ -87,6 +91,8 @@ struct ActivityScreen: View {
                           }
                           
                       }
+            if learningVM.goalProgress == .inProgress {
+                
             Spacer()
 
             // Log as Learned circle button
@@ -114,7 +120,7 @@ struct ActivityScreen: View {
                         .padding(.vertical, 8)
                 }
                 .buttonStyle(.glassProminent)
-                .tint(.blue)
+                .tint(.appBlue)
                 .disabled(!learningVM.canFreeze)
 
                 Text("\(learningVM.freezedCount) out of \(learningVM.freezeLimit) Freezes used")
@@ -123,9 +129,17 @@ struct ActivityScreen: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.bottom)
+            } else {
+                Spacer()
+                GoalEndedView(progress: learningVM.goalProgress, goal: goal)
+                Spacer()
+                Spacer()
+            }
         }
         
         .padding(.horizontal)
+        }
+        .toolbar(.hidden, for: .navigationBar)
             
     }
     //Big button appearance
@@ -150,7 +164,9 @@ struct ActivityScreen: View {
 }
 
 #Preview {
-    ActivityScreen(goal: LearningGoal(goalName: "Swift", Duration: .week, StartDtae: .now))
-        .environment(LearningViewModel())
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        ActivityScreen(goal: LearningGoal(goalName: "Swift", Duration: .week, StartDtae: .now))
+    }
+    .environment(LearningViewModel())
+    .preferredColorScheme(.dark)
 }

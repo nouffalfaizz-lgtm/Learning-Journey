@@ -17,7 +17,10 @@ struct LearningJourneyApp: App {
             // if there's a goal --> go to Activtiy page
             Group{
                 if let goal = LViewModel.goal{
-                    ActivityScreen(goal: goal)
+                NavigationStack {
+                  ActivityScreen(goal: goal)
+                }
+                    
                 }else{
                     // if there's no goal(or first time user) go to On Borading page
                     OnBoarding()
