@@ -34,8 +34,8 @@ struct EditGoalScreen: View {
                     Image(systemName: "checkmark")
                 }
                 .buttonStyle(.glassProminent)
-                .tint(viewModel.canLearn ? Color("AppOrange") : .black.opacity(0.5))
-                .disabled(!viewModel.canLearn)
+                .tint(canSave ? Color("AppOrange") : .black.opacity(0.5))
+                .disabled(!canSave)
             }
         }
         .alert("Update goal", isPresented: $showUpdateAlert) {
@@ -47,6 +47,12 @@ struct EditGoalScreen: View {
         } message: {
             Text("If you update now, your streak will start over.")
         }
+        
+    }
+    
+    // Save allowed if there's text AND (something changed OR the goal has ended)
+    private var canSave: Bool {
+        viewModel.canLearn && (viewModel.hasChanges || learningVM.goalProgress != .inProgress)
     }
 }
 

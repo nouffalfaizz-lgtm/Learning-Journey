@@ -14,9 +14,11 @@ struct CalendarScreen: View {
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
 
     var body: some View {
+        ScrollViewReader { proxy in
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 24) {
-                ForEach(viewModel.months(since: learningVM.firstActivityDate), id: \.self) { month in
+            
+            VStack(alignment: .leading, spacing: 24) {
+                ForEach(viewModel.monthsOfThisYear, id: \.self) { month in
                     VStack(alignment: .leading, spacing: 12) {
                         Text(viewModel.title(for: month))
                             .font(.headline)
@@ -38,11 +40,18 @@ struct CalendarScreen: View {
 
                         Divider()
                     }
+                    .id(month)
                    
                 }
                 
             }
             .padding(.horizontal)
+        }
+        .onAppear {
+            if let currentMonth = viewModel.currentMonth {
+                proxy.scrollTo(currentMonth, anchor: .top)
+            }
+        }
         }
         Spacer()
         .defaultScrollAnchor(.bottom)
@@ -58,3 +67,6 @@ struct CalendarScreen: View {
     .environment(LearningViewModel())
     .preferredColorScheme(.dark)
 }
+
+
+
