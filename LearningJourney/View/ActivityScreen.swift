@@ -12,6 +12,9 @@ struct ActivityScreen: View {
     let goal: LearningGoal
     @Environment(LearningViewModel.self) private var learningVM
     var body: some View {
+        
+        TimelineView(.everyMinute) { _ in
+        
         VStack(alignment:.leading , spacing: 24){
             //the header
             HStack{
@@ -29,23 +32,24 @@ struct ActivityScreen: View {
                 
                 HStack{
                     //calender page button
-                    Button{
-                       
-                    }label: {
+                    NavigationLink {
+                        CalendarScreen()
+                    } label: {
                         Image(systemName: "calendar")
                             .foregroundStyle(.white)
                             .frame(width: 45, height: 45)
-                            .glassEffect(.regular.interactive(), in: .circle)
+                            .glassEffect(.regular.tint(.black.opacity(0.5)).interactive(), in: .circle)
                             .padding()
                     }
                     
                     //notes page button
-                    Button{
+                    NavigationLink {
+                        EditGoalScreen(goal: goal)
                     } label: {
                         Image(systemName: "pencil.and.outline")
                             .foregroundStyle(.white)
                             .frame(width: 45, height: 45)
-                            .glassEffect(.regular.interactive(), in: .circle)
+                            .glassEffect(.regular.tint(.black.opacity(0.5)).interactive(), in: .circle)
                     }
                 }
                 
@@ -87,19 +91,21 @@ struct ActivityScreen: View {
                           }
                           
                       }
+            if learningVM.goalProgress == .inProgress {
+                
             Spacer()
 
             // Log as Learned circle button
             Button {
-                learningVM.logAsLearned()
+                learningVM.toggleLearnedToday()
             } label: {
                 Text(bigButtonTitle)
-                    .font(.title2.bold())
-                    .foregroundStyle(.white)
+                    .font(.title2)
+                    .foregroundStyle(learningVM.todayStatus != nil ? Color("AppGrey") : .white)
                     .frame(width: 272, height: 272)
                     .glassEffect(.regular.tint(bigButtonColor).interactive(), in: .circle)
             }
-            .disabled(learningVM.isTodayLogged)
+            .disabled(learningVM.todayStatus == .Freezeed)
             .frame(maxWidth: .infinity)
 
             Spacer()
@@ -114,7 +120,7 @@ struct ActivityScreen: View {
                         .padding(.vertical, 8)
                 }
                 .buttonStyle(.glassProminent)
-                .tint(.blue)
+                .tint(Color("AppBlue"))
                 .disabled(!learningVM.canFreeze)
 
                 Text("\(learningVM.freezedCount) out of \(learningVM.freezeLimit) Freezes used")
@@ -123,9 +129,17 @@ struct ActivityScreen: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.bottom)
+            } else {
+                Spacer()
+                GoalEndedView(progress: learningVM.goalProgress, goal: goal)
+                Spacer()
+                Spacer()
+            }
         }
         
         .padding(.horizontal)
+        }
+        .toolbar(.hidden, for: .navigationBar)
             
     }
     //Big button appearance
@@ -141,8 +155,7 @@ struct ActivityScreen: View {
     private var bigButtonColor: Color {
         switch learningVM.todayStatus {
         case nil:      return Color("AppOrange")
-        case .Learned: return Color(.darkGray)
-        case .Freezeed: return Color("AppBlue")
+        case .Learned, .Freezeed: return Color(white: 0.12)
         }
     }
     
@@ -150,7 +163,9 @@ struct ActivityScreen: View {
 }
 
 #Preview {
-    ActivityScreen(goal: LearningGoal(goalName: "Swift", Duration: .week, StartDtae: .now))
-        .environment(LearningViewModel())
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        ActivityScreen(goal: LearningGoal(goalName: "Swift", Duration: .week, StartDtae: .now))
+    }
+    .environment(LearningViewModel())
+    .preferredColorScheme(.dark)
 }

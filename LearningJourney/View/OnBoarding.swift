@@ -22,9 +22,8 @@ struct OnBoarding: View {
                 .padding(.vertical,60)
             
             //texts
-            Text("Hello Learner")
+            Text("Hello **Learner**")
                 .font(.system(size: 34))
-                .fontWeight(.bold)
             Text("This app will help you learn everyday!")
                 .foregroundStyle(Color("AppGrey"))
             
@@ -51,7 +50,7 @@ struct OnBoarding: View {
                             .glassEffect(
                                 .regular.tint(
                                     viewModel.selectedDuration == Duration ? Color("AppOrange")
-                                    : Color(.darkGray)
+                                    : .black.opacity(0.5)
                                 ), in: .capsule
                             )
                     }
@@ -70,7 +69,7 @@ struct OnBoarding: View {
     
             }
             .buttonStyle(.glassProminent)
-            .tint(.appOrange)
+            .tint(viewModel.canLearn ? .appOrange : .black.opacity(0.5))
             .disabled(!viewModel.canLearn)
             .frame(maxWidth: .infinity)
             

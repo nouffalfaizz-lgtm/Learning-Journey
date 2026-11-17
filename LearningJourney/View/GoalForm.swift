@@ -35,7 +35,7 @@ struct GoalForm: View {
                                 .regular.tint(
                                     viewModel.selectedDuration == duration
                                         ? Color("AppOrange")
-                                        : Color(.darkGray)
+                                      : .black.opacity(0.5)
                                 ),
                                 in: .capsule
                             )

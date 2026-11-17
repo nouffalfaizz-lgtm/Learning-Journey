@@ -135,6 +135,25 @@ class LearningViewModel{
         save()
     }
     
+    // Removes today's "learned" log for the current goal
+    func undoLearnedToday() {
+        guard let start = goal?.StartDtae else { return }
+        logs.removeAll { log in
+            log.status == .Learned
+            && log.date >= start
+            && Calendar.current.isDateInToday(log.date)
+        }
+        save()
+    }
+
+    // The big button: log if not logged yet, undo if already learned today
+    func toggleLearnedToday() {
+        if todayStatus == .Learned {
+            undoLearnedToday()
+        } else {
+            logAsLearned()
+        }
+    }
     
     // Saving
     private func save() {
