@@ -29,7 +29,7 @@ struct StatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .glassEffect(.regular, in: .rect(cornerRadius: 20))
+        .glassEffect(.regular.tint(.black.opacity(0.5)), in: .rect(cornerRadius: 20))
     }
 }
 

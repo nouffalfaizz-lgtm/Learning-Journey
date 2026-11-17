@@ -38,7 +38,7 @@ struct ActivityScreen: View {
                         Image(systemName: "calendar")
                             .foregroundStyle(.white)
                             .frame(width: 45, height: 45)
-                            .glassEffect(.regular.interactive(), in: .circle)
+                            .glassEffect(.regular.tint(.black.opacity(0.5)).interactive(), in: .circle)
                             .padding()
                     }
                     
@@ -49,7 +49,7 @@ struct ActivityScreen: View {
                         Image(systemName: "pencil.and.outline")
                             .foregroundStyle(.white)
                             .frame(width: 45, height: 45)
-                            .glassEffect(.regular.interactive(), in: .circle)
+                            .glassEffect(.regular.tint(.black.opacity(0.5)).interactive(), in: .circle)
                     }
                 }
                 
@@ -97,15 +97,15 @@ struct ActivityScreen: View {
 
             // Log as Learned circle button
             Button {
-                learningVM.logAsLearned()
+                learningVM.toggleLearnedToday()
             } label: {
                 Text(bigButtonTitle)
-                    .font(.title2.bold())
-                    .foregroundStyle(.white)
+                    .font(.title2)
+                    .foregroundStyle(learningVM.todayStatus != nil ? Color("AppGrey") : .white)
                     .frame(width: 272, height: 272)
                     .glassEffect(.regular.tint(bigButtonColor).interactive(), in: .circle)
             }
-            .disabled(learningVM.isTodayLogged)
+            .disabled(learningVM.todayStatus == .Freezeed)
             .frame(maxWidth: .infinity)
 
             Spacer()
@@ -120,7 +120,7 @@ struct ActivityScreen: View {
                         .padding(.vertical, 8)
                 }
                 .buttonStyle(.glassProminent)
-                .tint(.appBlue)
+                .tint(Color("AppBlue"))
                 .disabled(!learningVM.canFreeze)
 
                 Text("\(learningVM.freezedCount) out of \(learningVM.freezeLimit) Freezes used")
@@ -155,8 +155,7 @@ struct ActivityScreen: View {
     private var bigButtonColor: Color {
         switch learningVM.todayStatus {
         case nil:      return Color("AppOrange")
-        case .Learned: return Color(.darkGray)
-        case .Freezeed: return Color("AppBlue")
+        case .Learned, .Freezeed: return Color(white: 0.12)
         }
     }
     

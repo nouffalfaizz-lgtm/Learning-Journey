@@ -34,7 +34,7 @@ struct EditGoalScreen: View {
                     Image(systemName: "checkmark")
                 }
                 .buttonStyle(.glassProminent)
-                .tint(Color("AppOrange"))
+                .tint(viewModel.canLearn ? Color("AppOrange") : .black.opacity(0.5))
                 .disabled(!viewModel.canLearn)
             }
         }
