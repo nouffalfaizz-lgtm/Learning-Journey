@@ -1,10 +1,10 @@
-# 🔥 Learning Journey
+# Learning Journey
 
 **Learning Journey** is an iOS app that helps you build a daily learning habit. You set a topic and a time frame (a week, a month or a year), then log every day you learn, and the app tracks your streak.
 
 ---
 
-## ✨ Main Features
+##  Main Features
 
 - **Set a learning goal:** choose what you want to learn and pick a duration: Week, Month or Year.
 - **Log a day as learned:** one tap on the big button. Tap again to undo it the same day.
@@ -24,7 +24,7 @@
 
 ---
 
-## 📱 Screenshots
+##  Screenshots
 
 <table>
   <tr>
@@ -55,7 +55,7 @@
 
 ---
 
-## 🛠 Technologies Used
+##  Technologies Used
 
 | Technology | Used for |
 |------------|----------|
@@ -71,7 +71,7 @@
 
 ---
 
-## 🗂 Project Structure (MVVM)
+##  Project Structure (MVVM)
 
 ```
 LearningJourney/
@@ -99,7 +99,7 @@ LearningJourney/
 
 ---
 
-## 📝 Design Decisions
+##  Design Decisions
 
 - A **Month** goal counts as **30 days** and a **Year** goal as **365 days**.
 - A goal is completed when the number of learned **or** freezed days reaches the goal's length.
@@ -108,7 +108,7 @@ LearningJourney/
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 1. Clone the repository.
 2. Open `LearningJourney.xcodeproj` in **Xcode 26** or later.
