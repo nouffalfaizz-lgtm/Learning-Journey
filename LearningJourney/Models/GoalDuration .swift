@@ -45,3 +45,4 @@ enum GoalDuration: String , CaseIterable , Codable{
         }
     }
 }
+

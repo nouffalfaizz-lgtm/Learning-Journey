@@ -46,6 +46,7 @@ class LearningViewModel{
        }
     
     
+    
     var firstActivityDate: Date {
         let dates = logs.map { log in log.date } + [goal?.StartDtae ?? .now]
         return dates.min() ?? .now
@@ -109,6 +110,11 @@ class LearningViewModel{
 
     var goalProgress: GoalProgress {
         guard let goal else { return .inProgress }
+        
+        // 🧪 DEBUG: test the Goal Ended screen.
+        // Uncomment ONE line below, run, then comment it again before committing.
+//         return .completed
+//         return .notMet
 
         if currentGoalLogs.count >= goal.Duration.totalDays {
             return .completed
