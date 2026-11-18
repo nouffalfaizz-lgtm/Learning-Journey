@@ -29,33 +29,34 @@ struct OnBoarding: View {
             
             
             //text feild
-            VStack(alignment:.leading, spacing: 30){
-            Text("I Want to learn")
-                    .padding(.top)
-            TextField("enter your goal", text: $viewModel.GoalText)
-            Divider()
-        }
-            .padding(.vertical,20)
-            
-            Text("I want to learn it in a ")
-            HStack{
-                ForEach(GoalDuration.allCases, id:\.self){Duration in
-                    Button{
-                        viewModel.selectedDuration = Duration
-                    }label: {
-                        Text(Duration.title)
-                            .foregroundStyle(.white)
-                            .padding(.horizontal,16)
-                            .padding(.vertical,8)
-                            .glassEffect(
-                                .regular.tint(
-                                    viewModel.selectedDuration == Duration ? Color("AppOrange")
-                                    : .black.opacity(0.5)
-                                ), in: .capsule
-                            )
-                    }
-                }
-            }
+//            VStack(alignment:.leading, spacing: 30){
+//            Text("I Want to learn")
+//                    .padding(.top)
+//            TextField("enter your goal", text: $viewModel.GoalText)
+//            Divider()
+//        }
+//            .padding(.vertical,20)
+//            
+//            Text("I want to learn it in a ")
+//            HStack{
+//                ForEach(GoalDuration.allCases, id:\.self){Duration in
+//                    Button{
+//                        viewModel.selectedDuration = Duration
+//                    }label: {
+//                        Text(Duration.title)
+//                            .foregroundStyle(.white)
+//                            .padding(.horizontal,16)
+//                            .padding(.vertical,8)
+//                            .glassEffect(
+//                                .regular.tint(
+//                                    viewModel.selectedDuration == Duration ? Color("AppOrange")
+//                                    : .black.opacity(0.5)
+//                                ), in: .capsule
+//                            )
+//                    }
+//                }
+//            }
+            GoalForm(viewModel: viewModel)
           Spacer()
             
             Button {
@@ -72,6 +73,12 @@ struct OnBoarding: View {
             .tint(viewModel.canLearn ? .appOrange : .black.opacity(0.5))
             .disabled(!viewModel.canLearn)
             .frame(maxWidth: .infinity)
+            
+            Text("You can edit your desire later")
+                .font(.system(size: 12))
+                .font(.caption)
+                .foregroundStyle(Color("AppGrey"))
+                .frame(maxWidth: .infinity)
             
         }
         .padding(.horizontal)

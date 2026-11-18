@@ -19,6 +19,8 @@ class LearningViewModel{
 
     init() {
         load()
+        // 🧪 DEBUG: uncomment to add sample logs, run ONCE, then comment again.
+//         addSampleLogs()
     }
     
     
@@ -47,14 +49,17 @@ class LearningViewModel{
     
     
     
-    var firstActivityDate: Date {
-        let dates = logs.map { log in log.date } + [goal?.StartDtae ?? .now]
-        return dates.min() ?? .now
-    }
+//    var firstActivityDate: Date {
+//        let dates = logs.map { log in log.date } + [goal?.StartDtae ?? .now]
+//        return dates.min() ?? .now
+//    }
 
        // What the user did on a date. nil = nothing logged that day
     func status(for date: Date) -> DayStatus? {
-        logs.last { log in
+        if Calendar.current.isDateInToday(date) {
+            return todayStatus   // today follows the current goal only
+        }
+        return logs.last { log in
             Calendar.current.isDate(log.date, inSameDayAs: date)
         }?.status
     }
@@ -67,7 +72,7 @@ class LearningViewModel{
     
     // How many days were freezed
     var freezedCount: Int {
-        logs.filter { log in log.status == .Freezeed }.count
+        currentGoalLogs.filter { log in log.status == .Freezeed }.count
     }
     
     // 1 (day) or 3 day
@@ -160,6 +165,19 @@ class LearningViewModel{
             logAsLearned()
         }
     }
+    
+    // 🧪 DEBUG: fills the past 90 days with sample logs to test the Calendar.
+//    func addSampleLogs() {
+//        let calendar = Calendar.current
+//        for daysAgo in 1...90 {
+//            if daysAgo % 5 == 0 { continue }   // leave some days empty
+//            guard let date = calendar.date(byAdding: .day, value: -daysAgo, to: .now) else { continue }
+//            let status: DayStatus = daysAgo % 7 == 0 ? .Freezeed : .Learned
+//            logs.append(DayLog(date: date, status: status))
+//        }
+//        logs.sort { $0.date < $1.date }   // keep oldest → newest
+//        save()
+//    }
     
     // Saving
     private func save() {
