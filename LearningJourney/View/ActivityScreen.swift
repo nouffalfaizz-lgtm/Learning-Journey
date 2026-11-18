@@ -115,7 +115,8 @@ struct ActivityScreen: View {
                 Button {
                     learningVM.freezeToday()
                 } label: {
-                    Text("Freeze for a day")
+                    Text(learningVM.todayStatus == .Freezeed || learningVM.freezedCount >= learningVM.freezeLimit
+                         ? "Freezed for a day" : "Freeze for a day")
                         .frame(width: 272)
                         .padding(.vertical, 8)
                 }
@@ -169,3 +170,6 @@ struct ActivityScreen: View {
     .environment(LearningViewModel())
     .preferredColorScheme(.dark)
 }
+
+
+

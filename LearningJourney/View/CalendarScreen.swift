@@ -53,8 +53,6 @@ struct CalendarScreen: View {
             }
         }
         }
-        Spacer()
-        .defaultScrollAnchor(.bottom)
         .navigationTitle("Activities")
         .navigationBarTitleDisplayMode(.inline)
     }

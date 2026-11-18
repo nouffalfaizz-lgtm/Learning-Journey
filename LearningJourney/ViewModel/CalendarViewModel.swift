@@ -32,21 +32,21 @@ class CalendarViewModel {
             calendar.isDate(month, equalTo: .now, toGranularity: .month)
         }
     }
-
-    func months(since startDate: Date) -> [Date] {
-        guard let first = calendar.dateInterval(of: .month, for: startDate)?.start,
-              let last = calendar.dateInterval(of: .month, for: .now)?.start else {
-            return []
-        }
-        var result: [Date] = []
-        var current = first
-        while current <= last {
-            result.append(current)
-            guard let next = calendar.date(byAdding: .month, value: 1, to: current) else { break }
-            current = next
-        }
-        return result
-    }
+//
+//    func months(since startDate: Date) -> [Date] {
+//        guard let first = calendar.dateInterval(of: .month, for: startDate)?.start,
+//              let last = calendar.dateInterval(of: .month, for: .now)?.start else {
+//            return []
+//        }
+//        var result: [Date] = []
+//        var current = first
+//        while current <= last {
+//            result.append(current)
+//            guard let next = calendar.date(byAdding: .month, value: 1, to: current) else { break }
+//            current = next
+//        }
+//        return result
+//    }
 
     func days(in month: Date) -> [Date?] {
         guard let range = calendar.range(of: .day, in: .month, for: month) else { return [] }
